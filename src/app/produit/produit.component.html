@@ -3,15 +3,12 @@
 </p>
 
 <div>
-  <ul>
-  <li **ngFor="let produit of produits" >
-<h1>{produit.ref}</h1>
-<h2>{{produit.quantitie}}</h2>
-<h2>{{produit.prix}}</h2>
-
-  </li>
-
+<ul>
+<li *ngFor="let produit of produits" >
+<h1>{{produit.ref}}</h1>
+<p>Quantitie : {{produit.quantitie}}</p>
+<p>Prix : {{produit.prix+" dh"}} </p>
+<hr>
+</li>
 </ul>
-
-
 </div>

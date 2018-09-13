@@ -11,7 +11,7 @@ export class ProduitComponent implements OnInit {
 
   constructor(private produitService : ProduitMockService ) { }
 
-  produits: Produit[];
+   produits: Produit[];
 
 
   ngOnInit() {

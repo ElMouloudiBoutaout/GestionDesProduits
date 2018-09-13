@@ -7,7 +7,7 @@ import { Produit } from '../shared/produit';
 export class ProduitMockService {
 
 
-  PRODUITS: Produit[];
+   PRODUITS: Produit[]=[];
 
   constructor(){
 
