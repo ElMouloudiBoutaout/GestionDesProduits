@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +9,18 @@ export class NavbarComponent implements OnInit {
 
   constructor() { }
 
+  @Input()
+  afficherProduit: boolean = true;
+
+  @Output()
+  afficherProduitchangementEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   ngOnInit() {
+  }
+
+  AfficherLesProduits(): void {
+    this.afficherProduit = !this.afficherProduit;
+    this.afficherProduitchangementEvent.emit(this.afficherProduit);
   }
 
 }

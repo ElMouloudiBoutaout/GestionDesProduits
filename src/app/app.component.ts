@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my-project';
+
+  afficherLesProduits: boolean = true;
+
+  afficherLesProduitsRecevoir($event)
+  {
+    this.afficherLesProduits = $event;
+  }
+
+
 }

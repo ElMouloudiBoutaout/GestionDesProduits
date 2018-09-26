@@ -15,7 +15,9 @@ export class ProduitMockService {
     let p2:Produit =new Produit("PC",5,400);
     let p3:Produit =new Produit("Smart Phone",20,700);
     let p4:Produit =new Produit("Cigarette",500,2);
-    this.PRODUITS.push(p1,p2,p3,p4);
+    let p5:Produit =new Produit("PS4",15,7);
+
+    this.PRODUITS.push(p1,p2,p3,p4,p5);
   }
 
   public getProducts():Produit[]{

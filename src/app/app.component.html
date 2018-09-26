@@ -1,5 +1,14 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:left">
-   <app-produit></app-produit>
-</div>
+
+
+      <app-navbar (afficherProduitchangementEvent)="afficherLesProduitsRecevoir($event)" ></app-navbar>
+
+      <div *ngIf="afficherLesProduits"  >
+
+          <app-content></app-content>
+
+      </div>
+
+
+
+
 
