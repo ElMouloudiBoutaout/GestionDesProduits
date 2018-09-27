@@ -37,15 +37,12 @@ export class ProduitMockService {
   }
 
 
-  public getProductsoverHttp(): Observable<Produit[]> {
+    public getProductsoverHttp(): Observable<Produit[]> {
     return this.http
-      .get(URL + '/produits')
-      .map(response => {
-        const produits = response.json();
-        return produits.map((produit) => new Produit(produit));
-      })
-      .catch(this.handleError);
-  }
+      .get<Produit[]>('http://localhost:3000/produits').pipe(
+        tap());
+   }
+
 
   AjouterUnProduit(produit) {
     return this.http
