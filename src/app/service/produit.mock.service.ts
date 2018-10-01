@@ -1,10 +1,10 @@
+ import { Produit } from '../shared/produit';
 import { Injectable } from '@angular/core';
-import { Produit } from '../shared/produit';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +13,18 @@ export class ProduitMockService {
 
 
   PRODUITS: Produit[] = [];
-  static URL: string = "localhost:4200";
+   urlProduits: string = "http://localhost:3000/produits/";
 
 
   constructor(private http: HttpClient) {
-    let p1: Produit = new Produit(1,"Livre", 50, 40);
-    let p2: Produit = new Produit(2,"PC", 5, 400);
-    let p3: Produit = new Produit(3,"Smart Phone", 20, 700);
-    let p4: Produit = new Produit(4,"Cigarette", 500, 2);
-    let p5: Produit = new Produit(5,"PS4", 15, 7);
 
-    this.PRODUITS.push(p1, p2, p3, p4, p5);
   }
+
+   httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
+  };
 
   public getProducts() {
     return this.PRODUITS;
@@ -43,39 +43,22 @@ export class ProduitMockService {
         tap());
    }
 
-
-  AjouterUnProduit(produit) {
-    return this.http
-      .post(URL + '/produits', produit)
-      .map(response => {
-        return new Produit(response.json());
-      })
-      .catch(this.handleError);
+   AjouterProduit (produit): Observable<any> {
+    console.log(produit);
+    return this.http.post<any>(this.urlProduits + 'produits', JSON.stringify(produit), this.httpOptions).pipe(
+      tap((p) => console.log(`added product w/ id=${p.id}`)));
   }
 
-  public produitParId(produitID: number): Observable<Produit> {
-    return this.http
-      .get(URL + '/todos/' + produitID)
-      .map(response => {
-        return new Produit(response.json());
-      })
-      .catch(this.handleError);
+  majProduit (id, product): Observable<any> {
+    return this.http.put(this.urlProduits + 'produits/' + id, JSON.stringify(product), this.httpOptions).pipe(
+      tap(_ => console.log(`updated product id=${id}`))
+     );
   }
 
-  public majProduit(produit: Produit): Observable<Produit> {
-    return this.http
-      .put(URL + '/produits/' + produit.id, produit)
-      .map(response => {
-        return new Produit(response.json());
-      })
-      .catch(this.handleError);
-  }
-
-  public suppProduitparId(produitId: number): Observable<null> {
-    return this.http
-      .delete(URL + '/produits/' + produitId)
-      .map(response => null)
-      .catch(this.handleError);
+  supprimerProduit (id): Observable<any> {
+    return this.http.delete<any>(this.urlProduits + '/' + id, this.httpOptions).pipe(
+      tap(_ => console.log(`deleted product id=${id}`))
+    );
   }
 
 

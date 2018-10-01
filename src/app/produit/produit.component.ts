@@ -12,8 +12,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProduitComponent implements OnInit {
 
 
-   produitGroup: FormGroup;
+  produitGroup: FormGroup;
   submitted = false;
+  produit: Produit = {id: 0 ,  ref: 'xxx', quantitie: 0, prix: 0 };
 
   constructor(private produitService: ProduitMockService, private formBuilder: FormBuilder ) {
     this.produitGroup = this.formBuilder.group({
@@ -27,17 +28,35 @@ export class ProduitComponent implements OnInit {
 
 
   ngOnInit() {
-    this.produits = this.produitService.getProducts();
+   this.getProduits();
+  }
+
+  getProduits() {
+    this.produitService.getProductsoverHttp().subscribe(produits => {
+      this.produits = produits;
+    });
+  }
+
+  supprimerProduit (id) {
+    this.produitService.supprimerProduit(id).subscribe(
+      res => {
+        this.getProduits(); }
+    );
+  }
+
+  AjouterProduit() {
+    this.produitService.AjouterProduit(this.produit).subscribe(
+      res => {
+        this.getProduits(); }
+    );
   }
 
   onSubmit() {
-    this.submitted = true;
-
-     if (this.produitGroup.invalid) {
+      if (this.produitGroup.invalid) {
         return;
     }
-
-    alert('SUCCESS!! :-)');
+    console.log(this.produit);
+    // this.AjouterProduit();
 }
 
 }
