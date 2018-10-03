@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-7">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Réference</th>
+            <th scope="col">Quantitie</th>
+            <th scope="col">Prix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let produit of produits ; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{produit.ref}}</td>
+            <td>{{produit.quantitie}}</td>
+            <td>{{produit.prix+" dh"}}</td>
+            <td><button type="button" (click)="supprimerProduit (produit.id)" class="btn btn-primary">Supprimer</button></td>
+            <td><button type="button" (click)="produitParId (produit.id)" class="btn btn-success">Modifier</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card col-lg-7">
+      <div class="card-header">
+        Ajouter un nouveau produit
+      </div>
+      <div class="card-body">
+        <form [formGroup]="produitGroup" (ngSubmit)="onSubmit()">
+
+
+          <div class="form-group">
+            <label>Référence : {{ produit.ref }} </label>
+            <input type="text" formControlName="ref" [(ngModel)]="produit.ref" class="form-control" [ngClass]="{ 'is-invalid': submitted }" />
+            <!--<div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                      <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                  </div>-->
+          </div>
+
+          <div class="form-group">
+            <label>Quantitie :{{ produit.quantitie }}</label>
+            <input type="text" formControlName="quantitie" [(ngModel)]="produit.quantitie" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted  }" />
+            <!--  <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                      <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                  </div>-->
+          </div>
+          <div class="form-group">
+            <label>Prix : {{produit.prix}}</label>
+            <input type="text" formControlName="prix" [(ngModel)]="produit.prix" class="form-control" [ngClass]="{ 'is-invalid': submitted}" />
+            <!--  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                      <div *ngIf="f.email.errors.required">Email is required</div>
+                      <div *ngIf="f.email.errors.email">Email must be a valid email address</div>  && f.email.errors
+                  </div>-->
+          </div>
+
+
+          <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary">Register</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
